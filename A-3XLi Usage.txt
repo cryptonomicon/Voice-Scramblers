@@ -1,0 +1,40 @@
+A3-XLi Dynamic 8 band WAV Scrambler
+An improved version of the Bell Labs A-3 speech privacy system 
+
+
+Dependencies
+
+Python 3.7 or newer
+numpy
+scipy
+soundfile
+To install via pip:
+pip install numpy scipy soundfile
+
+To Scramble: 
+a3xli.py --action scramble --input example.wav --output scrambled.wav --key 4D8790BE3903 --rate 4
+
+To Descramble: 
+a3xli.py --action descramble --input scrambled.wav --output recovered.wav --key 4D8790BE3903 --rate 4
+
+Parameters:
+--action  scramble|descramble
+Required: Specifies the operation you want to perform (scramble or descramble).
+
+--input   <file>
+Required: Input .wav file.
+
+--output  <file>
+Required: Output .wav file.
+
+--key     <12 hex digits>
+Required: A 48-bit key, exactly 12 hexadecimal digits (0-9, A-F). Example: ABCD1234ABCD.
+
+--rate    <1-20>
+Required: Controls how many times the 8 voice bands are rearranged per second. Choose a value between 1 and 20 for best quality.
+
+Note: While 1-30 permutations per second are accepted, the recovered voice quality starts to noticeably degrade at rates above 20.
+
+
+Important Notes:
+To descramble a .wav, the key and rate used must exactly match those used during the scrambling process.
