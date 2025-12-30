@@ -1,0 +1,43 @@
+Sentinel II Hardened: 2D Time-Domain Voice Scrambler with Per-Frame Dynamic Seed Permutation for audio files
+
+Sentinel II Hardened is a robust and efficient offline voice obfuscation tool that employs advanced segment permutation techniques combined with cryptographic key handling to enhance security. Designed for secure, air-gapped environments, this second-generation scrambler provides frame-specific, synchronized permutations that significantly improve resistance against casual and AI-assisted analysis.
+
+Requirements:
+Python 3.6+
+numpy (for array operations and RNG)
+scipy (for signal processing and I/O)
+
+
+
+Usage Example:
+
+python sentinel2hardened.py --action scramble --input clear.wav --output scrambled.wav --key AABBCCDDEEFF00112233445566778899
+python sentinel2hardened.py --action descramble --input scrambled.wav --output recovered.wav --key AABBCCDDEEFF00112233445566778899
+
+--action        scramble | descramble
+--input         sample.wav
+--output        scrambled.wav
+--key           128 bits, 32 hexadecimal characters
+--block_size    default= 15 (row/column scrambling matrix). For increased security use 20-40.
+
+
+🔐 Key Features
+
+2D Matrix Scrambling with Per-Frame Dynamic Seeds:
+Audio is segmented into 30 ms chunks, forming a matrix of blocks. Each frame (block) employs unique row and column permutations, generated from a cryptographic hash of the master key and frame index. This ensures that each frame’s scrambling pattern is distinct and synchronized for accurate descrambling.
+
+Strong Cryptographic Key Derivation:
+Utilizes a user-supplied 128-bit (32-character hex) key, processed via SHA-256 hashing combined with frame identifiers to produce high-entropy, deterministic seeds for permutation. This guarantees secure, synchronized scrambling and descrambling.
+
+Automatic Padding and Fixed Segment Size:
+Audio is split into fixed 30 ms segments, with padding applied as needed to handle uneven lengths, maintaining data integrity and consistent matrix dimensions.
+
+Robust and Reversible Processing:
+The use of synchronized per-frame seeds ensures perfect reversibility, allowing accurate recovery of the original audio after descrambling.
+
+Bandpass Filtering for Clarity:
+Post-processing applies a 100–3500 Hz bandpass filter to improve intelligibility and reduce noise, balancing obfuscation with audio quality.
+
+Mono WAV Support:
+Supports mono WAV files; stereo input is automatically downmixed to mono for compatibility.
+

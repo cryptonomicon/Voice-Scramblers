@@ -1,0 +1,25 @@
+Galaxy II Secure DCT HMAC-based Scrambler for WAV files
+
+
+Requirements:
+
+Python 3.7+ (preferably 3.8 or newer)
+numpy
+soundfile
+scipy
+argparse
+
+To Scramble
+galaxy2.py --action scramble --input clear.wav --output scrambled.wav --key 1122334455667788aabbccddeeff1122
+
+To Descramble
+galaxy2.py --action descramble --input scrambled.wav --output recovered.wav --key 1122334455667788aabbccddeeff1122 
+
+Options:
+
+--segment_ms   default: 40
+--key          Up to 128-bit strength (8-32 hexadecimal characters)
+--no-post_lpf  Skip 4 kHz low-pass after descramble
+
+
+ 

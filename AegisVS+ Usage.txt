@@ -1,0 +1,39 @@
+Aegis VS+ Voice Security Plus Scrambler 
+Variable Split Band Inversion + 2 layer matrix Time Domain Scrambling
+128-bit cryptographic key \ HMAC-SHA-256
+
+ 
+python3 aegisvs.py --action scramble --input input.wav --output scrambled.wav --key 0123456789abcdef0123456789abcdef --frame_ms 100 --block_size 15
+
+python3 aegisvs.py --action descramble --input scrambled.wav --output original.wav --key 0123456789abcdef0123456789abcdef --frame_ms 100 --block_size 15
+
+
+--action      scramble | descramble
+--input       sample.wav
+--output      scrambled.wav
+--key         32 hexadecimal characters
+--frame_ms    default= 100ms, Frame duration in milliseconds
+--block_size  default= 15, Block size for matrix shuffling (15, 20, 30 recommended)
+
+
+
+Notes & Tips
+
+Single key: Use a 32-character hexadecimal string (e.g., 0123456789abcdef0123456789abcdef)
+Dynamic VSB hop rate: The hop rate varies per frame between approximately 4 and 20 hops/sec (adjustable in code).
+Audio quality: The combined process is designed to be reversible with minimal artifacts, but very aggressive parameter changes may affect quality.
+Adjusting hop rate range: To change the variable hop rate range, modify the derive_vsb_hop_rate() call in the script, e.g.:
+hop_rate = derive_vsb_hop_rate(key_bytes, frame_idx, min_rate=2.0, max_rate=10.0)
+Processing length: The script automatically trims the output to match the original input length, preserving timing.
+
+Variable VSB Hop Rate: The hop rate varies per frame between approximately 4 to 20 hops/sec (configurable in code).
+Audio Quality: Designed for minimal artifacts during reversible scrambling. Aggressive parameter changes may impact quality.
+Adjusting Hop Rate Range: Modify the derive_vsb_hop_rate() call within the script, e.g.:
+
+hop_rate = derive_vsb_hop_rate(key_bytes, frame_idx, min_rate=2.0, max_rate=10.0)
+
+Block size notes (2 layer time scrambling matrix, row/column):
+
+15  default (15! x 15!)
+20  balanced security/latency  (20! x 20!)
+30  enhanced security (30! x 30!)
