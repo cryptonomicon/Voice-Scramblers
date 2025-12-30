@@ -1,0 +1,21 @@
+ChaCha20 WAV file encryptor
+
+Requirements:
+Python 3.6+
+external dependency: cryptography library
+
+To encrypt:
+chacha20.py --action encrypt --input clear.wav --output encrypted.wav --key 5BA2FDC1253DF21A68021329A75D4CF151EAA7835264018F1AA13791089B04CD
+
+To decrypt:
+chacha20.py --action decrypt --input encrypted.wav --output recovered.wav --key 5BA2FDC1253DF21A68021329A75D4CF151EAA7835264018F1AA13791089B04CD
+
+
+--action  encrypt | decrypt
+--input   input.wav
+--output  output.wav
+--key     64 hex characters, 256-bit key
+
+128-bit nonce is embedded in the voice frames (Embedded as the first 16 bytes of the PCM payload) and used for decryption.
+The header (first 44 bytes) remains unchanged, preserving WAV format integrity.
+
