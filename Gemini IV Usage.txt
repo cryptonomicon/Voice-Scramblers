@@ -1,0 +1,39 @@
+Gemini IV FFT Voice Scrambler for WAV files
+
+
+Requirements
+Python 3.8+ recommended
+
+Dependencies:
+numpy
+scipy
+librosa
+soundfile
+
+
+To scramble:
+gemini4.py --action scramble --input input.wav --output output.wav  --bins 128 --key a1a2a1a2a1a2a1a20123456789abcdef0202020204040b --frame_size 512 --hop_size 128 
+
+
+To descramble:
+gemini4.py --action descramble --input input.wav --output output.wav --bins 128 --key a1a2a1a2a1a2a1a20123456789abcdef0202020204040b --frame_size 512 --hop_size 128 
+
+
+--action     scramble | descramble
+--input      input.wav
+--output     output.wav
+--bins       64, 128, 256, 512, or 1024 (Larger n_bins increases the number of permutations)
+--key        up to 48 hex characters (192-bit)
+--frame_size default= 512 (The number of samples processed together in each window/frame during spectral analysis.)
+--hop size   default= 128 (The number of samples to advance the window for each new frame; determines the overlap between consecutive frames.)
+
+
+Security
+
+The seed initializes the random permutation of spectral bins for each frame or block of frames, ensuring that the permutation pattern varies across different parts of the audio.  
+The seed is generated from a combination of a secret key and a block index (not per-frame). This design guarantees that:  
+
+The permutation pattern changes for each block of frames (e.g., every 16 frames if frames_per_perm=16).
+With a frame size of 512 samples and a 16 kHz sampling rate, this results in a seed change approximately every 500 milliseconds.
+The permutation pattern is deterministic for the same key and block index, allowing decryption to reproduce the same permutation during unscrambling.
+Elementary FFT-based attacks—such as half swaps, rotations, or reversals—are infeasible due to the randomness and complexity of the spectral permutations.
