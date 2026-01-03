@@ -1,5 +1,5 @@
 Galaxy II Secure DCT HMAC-based Scrambler for WAV files
-
+Medium security speech privacy system leveraging cryptographically secure permutation generation via HMAC-SHA256. Galaxy II transforms audio signals in the frequency domain with per-frame permutations derived from a cryptographic key, ensuring strong and reversible obfuscation without the need to store permutation tables.
 
 Requirements:
 
@@ -24,3 +24,4 @@ Options:
 
 
  
+
