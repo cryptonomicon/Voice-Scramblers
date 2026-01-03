@@ -1,5 +1,5 @@
 Gemini IV FFT Voice Scrambler for WAV files
-
+A medium security speech privacy system that permutes frequency bins in the FFT spectrum. It uses a key-based seed for permutation, enabling consistent descrambling with the same key. The key and block index are hashed to produce a seed, which determines the permutation applied to each block of frames.
 
 Requirements
 Python 3.8+ recommended
@@ -36,4 +36,5 @@ The seed is generated from a combination of a secret key and a block index (not 
 The permutation pattern changes for each block of frames (e.g., every 16 frames if frames_per_perm=16).
 With a frame size of 512 samples and a 16 kHz sampling rate, this results in a seed change approximately every 500 milliseconds.
 The permutation pattern is deterministic for the same key and block index, allowing decryption to reproduce the same permutation during unscrambling.
+
 Elementary FFT-based attacks—such as half swaps, rotations, or reversals—are infeasible due to the randomness and complexity of the spectral permutations.
