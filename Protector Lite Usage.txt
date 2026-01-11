@@ -1,0 +1,65 @@
+Protector Lite
+Multimode frequency-inversion voice scrambler for audio files
+Intended for educational and experimental use only
+
+Protector Lite applies classic and hopping frequency-inversion techniques to speech-band audio.
+Scrambling and descrambling are performed using the same parameters.
+
+Requirements
+Python 3.8 or higher
+NumPy
+SciPy
+
+Install the dependencies with:
+pip install numpy scipy
+
+
+Usage
+
+
+Fixed inversion mode
+
+Scramble:
+python protector-lite.py --input clear.wav --output scrambled.wav --key 10
+
+Descramble:
+python protector-lite.py --input scrambled.wav --output unscrambled.wav --key 10
+
+
+Hopping inversion mode
+
+Scramble:
+python protector-lite.py --input clear.wav --output scrambled.wav --seed af3429b2 --hop 2
+
+Descramble:
+python protector-lite.py --input scrambled.wav --output unscrambled.wav --seed af3429b2 --hop 2
+
+Note: The same --seed and --hop settings must be used for descrambling.
+
+
+Options:
+--input    Input WAV file
+--output   Output WAV file
+--seed     8-hex-character seed used for hopping mode
+--hop      1 | 2 | 3   Enable hopping inversion mode
+--key      1–18        Selects inversion frequency (fixed mode only)
+
+Hop Modes:
+1  Very slow (0.6-1.2 hops/sec)   (~833-1667 ms per hop)
+2  Slow      (1.2-2.4 hops/sec)   (~417-833 ms per hop)
+3  Medium    (2.4-4.8 hops/sec)   (~208-417 ms per hop)
+
+
+Notes and limitations
+
+This software implements classic frequency inversion, not encryption.
+
+Not intended for secure communications.
+
+Designed for experimentation, DSP learning, and demonstration purposes.
+
+
+
+
+
+
